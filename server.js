@@ -11,8 +11,12 @@ app.post('/upload', upload.single('file'), (req, res) => {
   res.status(200).send('File uploaded successfully.');
 });
 
+app.post('/feed', (req, res) => {
+  res.status(200).send("This is a stub route for \'/feed\'.")
+})
+
 app.get('/videos', (req, res) => {
-  
+  res.status(200).send("This is a stub route for \'/videos\'.")
 });
 
 app.listen(port, () => {

@@ -1,0 +1,2 @@
+from naoqi import ALProxy
+
