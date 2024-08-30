@@ -13,7 +13,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
   res.status(200).send('File uploaded successfully.');
 });
 
-app.get('/test_python_initalise', (req, res) => {
+app.get('/test_python_27_input', (req, res) => {
   nao.feedLine("test_input_from_nodejs()");
   res.status(200).send('Success');
 });
