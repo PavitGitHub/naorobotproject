@@ -3,12 +3,14 @@ const path = require('path');
 
 const PYTHON_SCRIPT_PATH_27 = __dirname + '\\2.7\\nao-controller.py';
 const PYTHON_SCRIPT_PATH_312 = __dirname + '\\3.12\\state-machine.py';
+const PYTHON_27_ENV_PATH_NAME = 'Python27';
+const PYTHON_312_ENV_PATH_NAME = 'Python312';
 
 class nao_controller {
 
     constructor(stdout_callback, nao_settings)
     {
-        this.controller = spawn('Python27', ['-u', PYTHON_SCRIPT_PATH_27]);
+        this.controller = spawn(PYTHON_27_ENV_PATH_NAME, ['-u', PYTHON_SCRIPT_PATH_27]);
 
         this.controller.stdout.on('data', (data) => {
             stdout_callback(data);

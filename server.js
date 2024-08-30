@@ -1,6 +1,6 @@
 const express = require('express');
 const { upload } = require('./filehandler');
-const {startNao_controller, nao_controller} = require('./Python/pythonHandler.js');
+const {nao_controller} = require('./Python/pythonHandler.js');
 
 const app = express();
 const port = 3000;
