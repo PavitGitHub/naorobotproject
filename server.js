@@ -1,11 +1,11 @@
 const express = require('express');
 const { upload } = require('./filehandler');
-const {nao_controller, yolo_controller} = require('./Python/pythonHandler.js');
+const { nao_controller, yolo_controller, yolo_callback, nao_callback } = require('./Python/pythonHandler.js');
 
 const app = express();
 const port = 3000;
-const nao = new nao_controller( (output) => {console.log(`Recieved Python Output!`)});
-const yolo = new yolo_controller((output) => {console.log(`Recieved Python Output!`)});
+var nao = new nao_controller(nao_callback);
+var yolo = new yolo_controller(yolo_callback);
 
 app.post('/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
@@ -19,13 +19,15 @@ app.get('/test_python_27_input', (req, res) => {
   res.status(200).send('Success');
 });
 
-app.post('/restart-nao-controller', (req, res) => {
-  nao = new nao_controller( (output) => {console.log(`Recieved Python Output!`)});
+app.get('/restart-nao-controller', (req, res) => {
+  console.warn('RESTARTING NAO CONTROLLER, WARNING: RECONNECTION REQUIRED.');
+  nao = new nao_controller(nao_callback);
   res.status(200).send("NAOv5 Evolution Controller successfully restarted, view server console for details.");
 });
 
-app.post('/restart-yolo-controller', (req, res) => {
-  yolo = new yolo_controller( (output) => {console.log(`Recieved Python Output!`)});
+app.get('/restart-yolo-controller', (req, res) => {
+  console.warn('RESTARTING YOLO CONTROLLER.');
+  yolo = new yolo_controller(yolo_callback);
   res.status(200).send("YOLOv8 Controller successfully restarted, view server console for details.");
 });
 

@@ -15,7 +15,6 @@ class nao_controller {
         this.controller.stdout.on('data', (data) => {
             stdout_callback(data);
             const output = data.toString();
-            console.log(`nao_controller stdout: ${output}`);
         });
 
         this.controller.stderr.on('data', (data) => {
@@ -32,7 +31,6 @@ class nao_controller {
         try
         {
             this.controller.stdin.write(input + '\n');
-            console.log(`Passed ${input} to nao controller.\n`);
         }
         catch (err)
         {
@@ -49,7 +47,6 @@ class yolo_controller {
         this.controller.stdout.on('data', (data) => {
             stdout_callback(data);
             const output = data.toString();
-            console.log(`YOLO_controller stdout: ${output}`);
         });
 
         this.controller.stderr.on('data', (data) => {
@@ -66,7 +63,6 @@ class yolo_controller {
         try
         {
             this.controller.stdin.write(input + '\n');
-            console.log(`Passed ${input} to YOLO controller.\n`);
         }
         catch (err)
         {
@@ -75,4 +71,14 @@ class yolo_controller {
     }
 }
 
-module.exports = { nao_controller, yolo_controller };
+function yolo_callback(output)
+{
+    console.log(`YC: ${output}`);
+}
+
+function nao_callback(output)
+{
+    console.log(`NC: ${output}`);
+}
+
+module.exports = { nao_controller, yolo_controller, yolo_callback, nao_callback };

@@ -42,21 +42,23 @@ def process_images(image_paths, model):
         print(f"Results: {results}")
 
 if __name__ == "__main__":
+    print('Loading model . . .')
     model = load_model()
-    
     # COMMENTED OUT DURING TESTING
-    # while True:
-    #     line = sys.stdin.readline().strip()
-    #     if line:
-    #         eval(line)
+    print('intialising command loop . . .')
+    while True:
+        line = sys.stdin.readline().strip()
+        if line:
+            print(f'Executing command {line} . . .')
+            eval(line)
 
-    image_filenames = ['image1.jpg', 'image2jpg']
-    print(f'Image files {image_filenames}')
-    # Ensure the images exist
-    image_paths = [filename for filename in image_filenames if os.path.isfile(filename)]
+    # image_filenames = ['C:/Users/joelm/Documents/GitHub/naorobotproject/uploads/images/image1.jpg']
+    # print(f'Image files {image_filenames}')
+    # # Ensure the images exist
+    # image_paths = [filename for filename in image_filenames if os.path.isfile(filename)]
 
-    if not image_paths:
-        print("No valid images to process.")
-    else:
-        # Process images and display predictions
-        process_images(image_paths, model)
+    # if not image_paths:
+    #     print("No valid images to process.")
+    # else:
+    #     # Process images and display predictions
+    #     process_images(image_paths, model)
