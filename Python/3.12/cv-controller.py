@@ -1,4 +1,5 @@
 import os
+import sys
 from ultralytics import YOLO
 import cv2
 import matplotlib.pyplot as plt
@@ -42,9 +43,15 @@ def process_images(image_paths, model):
 
 if __name__ == "__main__":
     model = load_model()
+    
+    # COMMENTED OUT DURING TESTING
+    # while True:
+    #     line = sys.stdin.readline().strip()
+    #     if line:
+    #         eval(line)
 
-    image_filenames = ['image1.jpg', 'image2.jpg']
-
+    image_filenames = ['image1.jpg', 'image2jpg']
+    print(f'Image files {image_filenames}')
     # Ensure the images exist
     image_paths = [filename for filename in image_filenames if os.path.isfile(filename)]
 
