@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Drum Pad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .drum-pad {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .pad-button {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            font-size: 20px;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pad-button:active {
+            background-color: #ff6347;
+        }
+
+        .pad-button[data-pressed="true"] {
+            background-color: #ff6347;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="drum-pad">
+        <button class="pad-button" id="btn1" onclick="sendRequest('pad1')">Pad 1</button>
+        <button class="pad-button" id="btn2" onclick="sendRequest('pad2')">Pad 2</button>
+        <button class="pad-button" id="btn3" onclick="sendRequest('pad3')">Pad 3</button>
+        <button class="pad-button" id="btn4" onclick="sendRequest('pad4')">Pad 4</button>
+        <button class="pad-button" id="btn5" onclick="sendRequest('pad5')">Pad 5</button>
+        <button class="pad-button" id="btn6" onclick="sendRequest('pad6')">Pad 6</button>
+        <button class="pad-button" id="btn7" onclick="sendRequest('pad7')">Reset NAO</button>
+        <button class="pad-button" id="btn8" onclick="sendRequest('pad8')">Reset CV</button>
+    </div>
+
+    <script>
+        function sendRequest(pad) {
+            const host = 'http://192.168.0.9'
+            //const host = 'http://localhost'
+            const port =  '3000'
+            const button = document.getElementById(`btn${pad.slice(-1)}`);
+
+            button.dataset.pressed = 'true';
+            var route = '';
+            switch (pad)
+            {
+                case 'pad0':
+                    break;
+                case 'pad1':
+                    break;
+                case 'pad3':
+                    break;
+                case 'pad4':
+                    break;
+                case 'pad5':
+                    break;
+                case 'pad6':
+                    break;
+                case 'pad7':
+                    route = 'restart-nao-controller'
+                    break;
+                case 'pad8':
+                    route = 'restart-yolo-controller';
+                    break;
+                default:
+                    alert("Invalid Post Route");
+                    return;
+            }
+            // Send POST request
+            fetch(`${host}:${port}/${route}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: '',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                button.dataset.pressed = 'false';
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
