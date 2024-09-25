@@ -1,6 +1,6 @@
 import os
 import sys
-from ultralytics import YOLO
+# from ultralytics import YOLO
 import cv2
 import matplotlib.pyplot as plt
 from inference_sdk import InferenceHTTPClient
@@ -15,6 +15,45 @@ import glob
 model_id = "lightweight_objdetect/7"
 api_key = "nNNDxwcGa4LCjLShqend"
 
+import cv2
+import time
+
+def extract_frames(video_source, output_folder, frames_per_second=2):
+    # Start capturing video from the source
+    cap = cv2.VideoCapture(video_source)
+    
+    if not cap.isOpened():
+        print("Error: Could not open video.")
+        return
+
+    # Get the frames per second of the video source
+    source_fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_interval = int(source_fps / frames_per_second)
+
+    current_frame = 0
+    extracted_count = 0
+
+    while True:
+        ret, frame = cap.read()
+        
+        if not ret:
+            break  # Break the loop if no frame is captured
+
+        if current_frame % frame_interval == 0:
+            frame_name = f"{output_folder}/frame_{extracted_count}.jpg"
+            cv2.imwrite(frame_name, frame)
+            extracted_count += 1
+            print(f"Extracted Frame: {frame_name}")
+
+        current_frame += 1
+
+        time.sleep(1 / source_fps)
+
+    cap.release()
+    print("Finished extracting frames.")
+
+# Usage example:
+# extract_frames(0, 'output_frames')  # for webcam, use 0 as video source
 
 def determine_position(img, x1, y1, x2, y2):
     """Determine the position of the bounding box within the image."""
@@ -41,33 +80,6 @@ def determine_position(img, x1, y1, x2, y2):
     else:
         return f"{vertical} {horizontal}"
 
-# def predict_and_draw_bboxes(image_path):
-#     """Predict the bounding boxes and draw them on the image."""
-#     # Load the image
-#     img = cv2.imread(image_path)
-#     if img is None:
-#         raise ValueError(f"Image not found: {image_path}")
-    
-#     # results = model.predict(image_path)
-
-#     # for box in results[0].boxes:
-#     #     x1, y1, x2, y2 = box.xyxy[0]
-#     #     conf = box.conf[0]
-#     #     cls = box.cls[0]
-        
-#     #     cv2.rectangle(img, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
-#     #     label = f"{model.names[int(cls)]} {conf:.2f}"
-#     #     cv2.putText(img, label, (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-#     # plt.figure(figsize=(10, 10))
-#     # plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-#     # plt.axis('off')
-#     # plt.show()
-
-    
-#     results = CLIENT.infer(img, )
-#     return results
-
 def predict_and_draw_bboxes(image_path):
     """Predict the bounding boxes using an API client and draw them on the image."""
     img = cv2.imread(image_path)
@@ -78,11 +90,12 @@ def predict_and_draw_bboxes(image_path):
         api_url="https://detect.roboflow.com",
         api_key="nNNDxwcGa4LCjLShqend"
     )
-    # get_model( model_id="lightweight_objdetect/7")
+    
+    # model = YOLO(model_path)
+    # results = model.predict(image_path)
     
     results = CLIENT.infer(image_path,model_id="lightweight_objdetect/7")
     positions = []
-    
 
     
     for box in results['predictions']:
@@ -95,15 +108,14 @@ def predict_and_draw_bboxes(image_path):
         # label = f"{box['class']} {box['confidence']:.2f}"
         label = f"{box['class']}"
 
-        # cv2.putText(img, label, (int(x1), int(y1) - 10), cv2., 0.5, (255, 255, 255), 1)
+        cv2.putText(img, label, (int(x1), int(y1) - 10), 0, 0.5, (255, 255, 255), 2)
         position = determine_position(img, x1, y1, x2, y2)
         
         positions.append((label, position))
-        
-    # uncomment to show the annotated images
-    # cv2.imshow("Detected Objects", img)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    
+    filename = "pred/pred" + os.path.basename(image_path)
+    print(filename)
+    cv2.imwrite(filename, img)
     return positions
 
 

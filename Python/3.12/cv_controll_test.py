@@ -1,6 +1,6 @@
 import os
 import sys
-from ultralytics import YOLO
+# from ultralytics import YOLO
 import cv2
 import matplotlib.pyplot as plt
 from inference_sdk import InferenceHTTPClient
