@@ -50,18 +50,17 @@
         <button class="pad-button" id="btn1" onclick="sendRequest('pad1')">Pad 1</button>
         <button class="pad-button" id="btn2" onclick="sendRequest('pad2')">Pad 2</button>
         <button class="pad-button" id="btn3" onclick="sendRequest('pad3')">Pad 3</button>
-        <button class="pad-button" id="btn4" onclick="sendRequest('pad4')">Pad 4</button>
-        <button class="pad-button" id="btn5" onclick="sendRequest('pad5')">Pad 5</button>
-        <button class="pad-button" id="btn6" onclick="sendRequest('pad6')">Pad 6</button>
+        <button class="pad-button" id="btn4" onclick="sendRequest('pad4')">Motion</button>
+        <button class="pad-button" id="btn5" onclick="sendRequest('pad5')">Vision</button>
+        <button class="pad-button" id="btn6" onclick="sendRequest('pad6')">Listen</button>
         <button class="pad-button" id="btn7" onclick="sendRequest('pad7')">Reset NAO</button>
         <button class="pad-button" id="btn8" onclick="sendRequest('pad8')">Reset CV</button>
     </div>
 
     <script>
         function sendRequest(pad) {
-            const host = 'http://192.168.0.9'
-            //const host = 'http://localhost'
-            const port =  '3000'
+            const host = "http://<%= ipAddress %>"
+            const port =  "<%= port %>"
             const button = document.getElementById(`btn${pad.slice(-1)}`);
 
             button.dataset.pressed = 'true';
@@ -75,16 +74,19 @@
                 case 'pad3':
                     break;
                 case 'pad4':
+                route = 'motion-sensor'
                     break;
                 case 'pad5':
+                route = 'computer-vision'
                     break;
                 case 'pad6':
+                route = 'nao-listen'
                     break;
                 case 'pad7':
                     route = 'restart-nao-controller'
                     break;
                 case 'pad8':
-                    route = 'restart-yolo-controller';
+                    route = 'restart-cv-controller';
                     break;
                 default:
                     alert("Invalid Post Route");
@@ -111,10 +113,10 @@
                 console.error('Error:', error);
             });
         
-            // Reset button after 2 seconds
+            // reset button
             setTimeout(() => {
                 button.dataset.pressed = 'false';
-            }, 2000);
+            }, 1000);
         }
     </script>
 
