@@ -1,5 +1,5 @@
 const express = require('express');
-const { upload } = require('./filehandler');
+const { upload } = require('./uploads/filehandler');
 const { computerVision, translateAudio, restartNaoController, restartCVController } = require('./controllers/dataController');
 const { setUser, verifyUser } = require('./controllers/userController');
 const { getIPAddress } = require('./utils/ip');
@@ -25,7 +25,7 @@ app.post('/restart-cv-controller', restartCVController);
 app.get('*', (req, res) => 
 {
   let ipAddress = DEBUG ? 'localhost' : getIPAddress();
-  res.render(process.cwd() + '/drumpad.ejs', { ipAddress, port });
+  res.render(process.cwd() + './ejs/drumpad.ejs', { ipAddress, port });
 });
 
 app.listen(port, () => {
