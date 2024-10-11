@@ -3,6 +3,7 @@ import sys
 import vision_definitions
 import numpy as np
 import cv2
+import os
 import time  # For recording functionality
 
 # Initialize TTS proxy
@@ -78,20 +79,21 @@ def display_image(image_array):
     cv2.waitKey(0)  # Wait for a key press to close the window
     cv2.destroyAllWindows()  # Close the window after key press
 
-def save_image(image_array, filename='captured_image.png'):
+def save_image(image_array, filename='../../tempFileStorage/captured_image.png'):
     """Save the captured image to a file."""
     # Save the image as a file (no need to convert the color for saving)
     cv2.imwrite(filename, image_array)
     print("Image saved as {}".format(filename))
 
-def get_frame():
+def get_frame(filename='../../tempFileStorage/captured_image.png'):
     """Capture, display, and save an image from the robot's camera."""
     img = get_camera_image('192.168.0.170')
     if img is not None:
         display_image(img)
-        save_image(img)
+        save_image(img, filename=filename)
     else:
         print("Failed to retrieve image.")
+
 
 def send_tts(text="This command has been sent from the server"):
     """Send a text-to-speech command to the robot."""
@@ -108,7 +110,7 @@ def test_input_from_nodejs():
     """Test function to confirm input from Node.js."""
     print("Python function called!")
 
-def start_recording(duration=5, filename="/home/nao/audio.wav"):
+def start_recording(duration=5, filename='../../tempFileStorage/audio.wav'):
     """Start recording audio from the robot's microphones."""
     try:
         audioProxy = ALProxy("ALAudioRecorder", "192.168.0.170", 9559)
@@ -135,21 +137,35 @@ if __name__ == "__main__":
             # Check if the command includes arguments
             if ' ' in line:
                 cmd_parts = line.split(' ', 1)
-                command = cmd_parts[0]
-                args = cmd_parts[1]
-                if command in command_map:
-                    if command == 'send_tts':
+                command = cmd_parts
+                args = cmd_parts
+            else:
+                command = line
+            if command in command_map:
+                if command == 'send_tts':
+                    try:
                         send_tts(args)
-                    elif command == 'start_recording':
-                        try:
-                            duration = float(args)
-                            start_recording(duration=duration)
-                        except ValueError:
-                            print("Invalid duration. Please enter a number.")
-                    else:
-                        print("Command {} does not accept arguments.".format(command))
+                    except Exception as e:
+                        print("ERROR: {}".format(e))
+                elif command == 'start_recording':
+                    try:
+                        duration = float(args[0])
+                        start_recording(duration=duration)
+                    except Exception as e:
+                        print("ERROR: {}".format(e))
+                elif command == 'get_frame':
+                    try:
+                        filename = args[0]
+                        get_frame(filename=filename)
+                    except Exception as e:
+                        print("ERROR: {}".format(e))
+                elif command == 'test_input_from_nodejs':
+                    try:
+                        test_input_from_nodejs()
+                    except Exception as e:
+                        print("ERROR: {}".format(e))                        
                 else:
-                    print("Unknown command: {}".format(command))
+                    print("ERROR: Unknown command: {}".format(command))
             else:
                 if line in command_map:
                     command_map[line]()
