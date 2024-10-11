@@ -10,11 +10,16 @@ class nao_controller {
 
     constructor(stdout_callback, nao_settings)
     {
+        this.new_output = false;
+        this.last_output = '';
+        this.all_output = '';
         this.controller = spawn(PYTHON_27_ENV_PATH_NAME, ['-u', PYTHON_SCRIPT_PATH_27]);
 
         this.controller.stdout.on('data', (data) => {
             stdout_callback(data);
-            const output = data.toString();
+            this.last_output = data.toString();
+            this.all_output += this.last_output
+            this.new_output = true;
         });
 
         this.controller.stderr.on('data', (data) => {
@@ -24,6 +29,15 @@ class nao_controller {
         this.controller.on('exit', (code) => {
             console.log(`Nao Controller exited with code: ${code}`);
         });
+    }
+
+    getLastOutput()
+    {
+        if (this.new_output)
+        {
+            return this.last_output;
+            this.new_output = false;
+        }
     }
 
     feedLine(input)
