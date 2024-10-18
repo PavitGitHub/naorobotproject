@@ -1,6 +1,6 @@
 import os
 import sys
-# from ultralytics import YOLO
+from ultralytics import YOLO
 import cv2
 import matplotlib.pyplot as plt
 from inference_sdk import InferenceHTTPClient
@@ -78,57 +78,67 @@ def determine_position(img, x1, y1, x2, y2):
     if vertical=="center" and horizontal == "center":
         return "center"
     else:
-        return f"{vertical} {horizontal}"
+        return f"{horizontal}"
 
 def predict_and_draw_bboxes(image_path):
-    """Predict the bounding boxes using an API client and draw them on the image."""
+    """Predict the bounding boxes using the YOLO model and return detected objects with their positions."""
     img = cv2.imread(image_path)
     if img is None:
         raise ValueError(f"Image not found: {image_path}")
     
-    CLIENT = InferenceHTTPClient(
-        api_url="https://detect.roboflow.com",
-        api_key="nNNDxwcGa4LCjLShqend"
-    )
+    model_path = "best.pt"
+    model = YOLO(model_path)
+    results = model.predict(image_path, save=True, project='pred')
     
-    # model = YOLO(model_path)
-    # results = model.predict(image_path)
-    
-    results = CLIENT.infer(image_path,model_id="lightweight_objdetect/7")
-    positions = []
+    # Initialize a list to store detected objects with positions
+    detected_objects = []
 
-    
-    for box in results['predictions']:
-        x1 = box['x'] - box['width'] / 2
-        y1 = box['y'] - box['height'] / 2
-        x2 = box['x'] + box['width'] / 2
-        y2 = box['y'] + box['height'] / 2
+    # Since results may contain multiple images, iterate over them
+    for result in results:
+        boxes = result.boxes
+        for box in boxes:
+            class_id = int(box.cls[0].item())
+            class_name = model.names[class_id]  # Using default class names
+
+            # Get bounding box coordinates
+            x1, y1, x2, y2 = box.xyxy[0].tolist()  # [x1, y1, x2, y2]
+
+            # Determine position
+            position = determine_position(img, x1, y1, x2, y2)
+
+            # Append object name and position to the list
+            detected_objects.append({'object': class_name, 'position': position})
+
+    unique_objects = list({obj['object'] for obj in detected_objects})
+
+    # print("Objects detected in the image:", [obj['object'] for obj in detected_objects])
+    # print("Unique objects detected:", unique_objects)
         
-        cv2.rectangle(img, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
-        # label = f"{box['class']} {box['confidence']:.2f}"
-        label = f"{box['class']}"
-
-        cv2.putText(img, label, (int(x1), int(y1) - 10), 0, 0.5, (255, 255, 255), 2)
-        position = determine_position(img, x1, y1, x2, y2)
-        
-        positions.append((label, position))
-    
-    filename = "pred/pred" + os.path.basename(image_path)
-    print(filename)
-    cv2.imwrite(filename, img)
-    return positions
-
-
+    return detected_objects
 
 def process_images(image_paths):
     """Process a list of image paths, making predictions and displaying results."""
-    # use for local testing
+    # Use for local testing
     image_paths = glob.glob("test/*")
-    # image_paths = glob.glob(image_path)
     for image_path in image_paths:
         print(f"Processing {image_path}...")
         results = predict_and_draw_bboxes(image_path)
-        print(f"Results: {results}")
+        print("Results:")
+        for obj in results:
+            print(f"Object: {obj['object']}, Position: {obj['position']}")
+
+
+
+
+# def process_images(image_paths):
+#     """Process a list of image paths, making predictions and displaying results."""
+#     # use for local testing
+#     image_paths = glob.glob("test/*")
+#     # image_paths = glob.glob(image_path)
+#     for image_path in image_paths:
+#         print(f"Processing {image_path}...")
+#         results = predict_and_draw_bboxes(image_path)
+#         print(f"Results: {results}")
 
 if __name__ == "__main__":
     print('Loading model . . .')
