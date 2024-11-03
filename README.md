@@ -1,4 +1,4 @@
-# Project Name
+# Guide dog robot for the visually impaired 
 
 ## Table of Contents
 
