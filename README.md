@@ -16,6 +16,15 @@
 ## Project Background/Overview
 
 <!-- Provide an overview of the project, its purpose, and objectives. -->
+The Guide Dog Robot project is an innovative solution designed to assist visually impaired individuals in navigating their surroundings safely and independently. Built on the advanced NAO V5 humanoid robot platform, this project integrates multiple cutting-edge technologies to emulate the assistance provided by a guide dog.
+
+Key technologies implemented in this project include:
+
+- Text-to-Speech (TTS): Allows the robot to communicate verbally with the user, providing real-time updates about the environment, obstacles, and navigation instructions.
+- Speech-to-Text (STT): Enables the robot to understand and process verbal commands from the user, facilitating seamless human-robot interaction.
+- Computer Vision: Utilizes a YOLOv9 model for object detection and environment mapping, helping the robot identify obstacles, recognize landmarks, and make informed navigation decisions.
+- Web-Based Control Interface: A user-friendly website that allows caregivers or users to remotely control the robot, adjust settings, and monitor its status in real-time.
+By combining these technologies, the Guide Dog Robot aims to enhance the quality of life for visually impaired individuals, offering a reliable and interactive companion for daily activities.
 
 ## Demo
 
