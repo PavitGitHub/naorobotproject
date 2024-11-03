@@ -1,7 +1,5 @@
 # Guide dog robot for the visually impaired 
 
-## Table of Contents
-
 - [Project Background/Overview](#project-backgroundoverview)
 - [Demo](#demo)
 - [Features](#features)
