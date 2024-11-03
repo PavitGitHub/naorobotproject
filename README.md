@@ -28,6 +28,7 @@ By combining these technologies, the Guide Dog Robot aims to enhance the quality
 
 ## Demo
 
+Have a look at this folder for [demo videos](https://drive.google.com/drive/folders/1g7xdTrDOXYPbarWvkWu9Pxx5UVu0v-n4) showing various aspects of the project!
 <!-- Include a link to the hosted project or a demo video. -->
 
 ## Features
