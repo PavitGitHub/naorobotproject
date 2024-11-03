@@ -1,61 +1,74 @@
-# Guide Robot for vision impaired people
+# Project Name
 
 ## Table of Contents
 
-- [TL;DR](#tldr)
-- [Installation Options](#installation-options)
-  - [Option 1: Direct Download](#option-1-direct-download)
-  - [Option 2: Package Manager](#option-2-package-manager)
-  - [Option 3: Build from Source](#option-3-build-from-source)
+- [Project Background/Overview](#project-backgroundoverview)
+- [Demo](#demo)
 - [Features](#features)
-- [Developer/Contributor Section](#developercontributor-section)
-- [Project Motivation](#project-motivation)
-- [Additional Info](#additional-info)
-  - [Unstable File Paths](#unstable-file-paths)
-  - [Changelog](#changelog)
-  - [Licensing](#licensing)
+- [Documentation](#documentation)
+- [System Requirements](#system-requirements)
+- [Installation Guide](#installation-guide)
+- [Changelog](#changelog)
+- [Traceability Matrix](#traceability-matrix)
+- [Contact](#contact)
+- [License](#license)
 
-## TL;DR
+## Project Background/Overview
 
-<!-- Brief summary of the project -->
+<!-- Provide an overview of the project, its purpose, and objectives. -->
 
-## Installation Options
+## Demo
 
-### Option 1: Direct Download
-
-<!-- Instructions for direct download -->
-
-### Option 2: Package Manager
-
-<!-- Instructions for installation via a package manager -->
-
-### Option 3: Build from Source
-
-<!-- Instructions for building the project from source -->
+<!-- Include a link to the hosted project or a demo video. -->
 
 ## Features
 
-<!-- List of key features -->
+<!-- List the features or user stories, organized in sprints if applicable. -->
 
-## Developer/Contributor Section
+Our project incorporates a computer vision module that utilizes a training on a [**YOLOv9m**](https://docs.ultralytics.com/models/yolov9/#programmable-gradient-information-pgi) model for object detection and recognition tasks. The model is trained on a custom road objects dataset, [Lightweight_ObjDetect](https://universe.roboflow.com/derbyuniobjdet/lightweight_objdetect/browse) obtained from opensource website Roboflow to enhance accuracy for our specific use case. To test the model on a specific directory of images do the following: 
 
-<!-- Information for developers and contributors -->
+**Testing the Computer Vision Module:**
 
-## Project Motivation
+1. **Navigate to the Python directory:**
+```
+cd Python/3.12  
+```
+   
+2.  **Run the computer vision controller script:**
+```
+python cv-controller.py
+```
+3. **Process images using the process_images function in the python shell:**
+```
+process_images("test")  # Or specify the path to your test directory in the code
+```
 
-<!-- Explanation of the project's purpose and goals -->
 
-## Additional Info
+## Documentation
 
-### Unstable File Paths
+<!-- Provide links to user stories, architecture diagrams, test cases, and other documents exported from Confluence as PDFs. -->
 
-<!-- Details about any unstable or experimental features -->
+## System Requirements
 
-### Changelog
+<!-- List the tools, databases, and their versions required for the project. -->
 
-<!-- Link to or include the project's changelog -->
+## Installation Guide
 
-### Licensing
+<!-- Provide setup and configuration details to install and run your code. -->
 
-<!-- Licensing information -->
+## Changelog
+
+<!-- Include or link to the project's changelog detailing updates and changes. -->
+
+## Traceability Matrix
+
+<!-- Include a traceability matrix linking requirements to test cases or other artifacts. -->
+
+## Contact
+
+<!-- Provide contact information for support or inquiries. -->
+
+## License
+
+<!-- Include licensing information for the project. -->
 
