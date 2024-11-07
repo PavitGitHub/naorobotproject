@@ -63,15 +63,30 @@ process_images("test")  # Or specify the path to your test directory in the code
 ## Installation Guide
 **Installing Translation Module:**
 1. **OpenAI API installation**
-'''
+```
 pip install openai
-'''
-pip install --upgrade pip
+```
+2. **Google Clound Basic Translation Version installation**
+```
 pip install google-cloud-translate==2.0.1
+```
+3. **Google Clound Text-To-Speech installation**
+```
 pip install google-cloud-texttospeech
+```
+4. **Python Playsound Library installation**
+```
 pip install playsound==1.2.2
+```
+6. **Google Cloud Setup**
+```
 install gcloud cli installer
 gcloud auth application-default login
+```
+7. **Python Update (if necessary)**
+```
+pip install --upgrade pip
+```
 
 <!-- Provide setup and configuration details to install and run your code. -->
 
