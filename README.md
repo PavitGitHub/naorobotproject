@@ -61,6 +61,14 @@ process_images("test")  # Or specify the path to your test directory in the code
 <!-- List the tools, databases, and their versions required for the project. -->
 
 ## Installation Guide
+**Installing Translation Module:**
+pip install openai 
+pip install --upgrade pip
+pip install google-cloud-translate==2.0.1
+pip install google-cloud-texttospeech
+pip install playsound==1.2.2
+install gcloud cli installer
+gcloud auth application-default login
 
 <!-- Provide setup and configuration details to install and run your code. -->
 
