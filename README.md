@@ -61,6 +61,31 @@ process_images("test")  # Or specify the path to your test directory in the code
 <!-- List the tools, databases, and their versions required for the project. -->
 
 ## Installation Guide
+**Installing Python Versions**
+1. **Download and install python 2.7 and python 3.12+**
+```
+https://www.python.org/download/releases/2.7/
+https://www.python.org/downloads/release/python-3127/
+```
+2. **Install with custom path environment variable names**
+```
+Python27 & Python312
+```
+**Installing NodeJS and Node Package Manager**
+1. **Download and Install NPM and NodeJS**
+```
+https://nodejs.org/en/download/package-manager
+https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+```
+2. **Install Package Modules**
+ensure this is ran from within the node project to automatically install all dependencies
+```
+npm install
+```
+3. **Run Server**
+```
+node server.js
+```
 **Installing Translation Module:**
 1. **OpenAI API installation**
 ```
