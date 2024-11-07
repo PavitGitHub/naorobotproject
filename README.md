@@ -62,7 +62,10 @@ process_images("test")  # Or specify the path to your test directory in the code
 
 ## Installation Guide
 **Installing Translation Module:**
-pip install openai 
+1. **OpenAI API installation**
+'''
+pip install openai
+'''
 pip install --upgrade pip
 pip install google-cloud-translate==2.0.1
 pip install google-cloud-texttospeech
