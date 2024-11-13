@@ -57,9 +57,11 @@ process_images("test")  # Or specify the path to your test directory in the code
 <!-- Provide links to user stories, architecture diagrams, test cases, and other documents exported from Confluence as PDFs. -->
 
 ## System Requirements
-
-<!-- List the tools, databases, and their versions required for the project. -->
-
+- **Python**: Version 2.7 (for controlling the NAO robot) and 3.12 (for server and computer vision modules)
+- **Google Cloud**: For translation and TTS services
+- **Arduino**: Required for programming the ESP32 to collect data from external sensors and integration
+- **NodeJS**: Used to run the web control interface
+- **Google Cloud**: For translation and TTS services
 ## Installation Guide
 **Installing Python Versions**
 1. **Download and install python 2.7 and python 3.12+**
@@ -86,6 +88,49 @@ npm install
 ```
 node server.js
 ```
+**Installing IMU Motion Control and external hardware module:**
+1. **Running the Flask Server**
+
+The Flask server allows NAO robot commands to be sent and processed. Follow these steps to run the server:
+
+1. Navigate to the directory containing `flask_server.py`.
+
+   ```
+   cd /path/to/your/project
+   ```
+
+2. Run the Flask server using Python 3.12:
+
+   ```
+   python flask_server.py
+   ```
+
+This server will be available at `http://0.0.0.0:5000/` and is set to handle multiple requests through multithreading. The server listens for POST requests on `/nao/command` and processes commands for controlling the NAO robot.
+
+2. **Running the IMU Control Module**
+
+The IMU control module is responsible for controlling NAO's movement based on the received commands. Follow these steps to execute the IMU control script:
+
+1. Navigate to the Python 2.7 directory:
+
+   ```
+   cd C:/nao-robot/naorobotproject/Python/2.7
+   ```
+
+2. Run the control script (`imu_control_test.py`) with a command argument:
+
+   ```
+   python imu_control_test.py <command>
+   ```
+
+   Replace `<command>` with one of the supported commands such as `forward`, `backward`, `left`, `right`, or `stop`.
+
+   - **forward**: Move the robot forward
+   - **backward**: Move the robot backward
+   - **left**: Turn the robot left in place
+   - **right**: Turn the robot right in place
+   - **stop**: Stop all robot movements
+
 **Installing Translation Module:**
 1. **OpenAI API installation**
 ```
